@@ -2,3 +2,4 @@ env/
 __pycahe__
 .env
 NOTE.MD
+__pycache__/main.cpython-310.pyc
