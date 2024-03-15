@@ -9,7 +9,7 @@ To install and run the API, follow these steps:
 1. Clone this repository:
 
    ```
-   git clone https://github.com/yourusername/AI-Generate-Image-API-with-FastAPI.git
+   git clone https://github.com/hossainchisty/AI-Generate-Image-API-with-FastAPI.git
    ```
 
 2. Navigate into the cloned directory:
