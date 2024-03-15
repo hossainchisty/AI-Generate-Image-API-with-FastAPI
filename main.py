@@ -3,6 +3,7 @@ import requests
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from fastapi import status
 
 load_dotenv()
 
@@ -13,8 +14,20 @@ class TextRequest(BaseModel):
     prompt: str
 
 
-# Endpoint to handle chat conversion
-@app.post("/generate-image")
+# Checks if the API server is running
+@app.get("/health", status_code=status.HTTP_200_OK)
+async def health():
+    try:
+        return {"message": "API is running✅"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Something went wrong!",
+        )
+
+
+# Generates an image based on the provided prompt.
+@app.post("/generate-image", status_code=status.HTTP_201_CREATED)
 async def text_to_image(request: TextRequest):
     try:
         url = os.getenv("URL")
@@ -35,7 +48,10 @@ async def text_to_image(request: TextRequest):
         return {"data": data}
     except Exception as e:
         print(e)
-        raise HTTPException(status_code=500, detail="Failed to generate image")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to generate image",
+        )
 
 
 if __name__ == "__main__":
